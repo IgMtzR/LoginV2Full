@@ -6,6 +6,7 @@ import com.crud.LoginV2Full.service.InventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class InventarioController {
     envié desde nuestros endpoints.
     */
     //**************************************************************************************//
+
 
 
     @GetMapping("/getAllInventario")//Generando sub mapeo para consultar todas las entidades en la database
@@ -51,6 +53,7 @@ public class InventarioController {
         return  new ResponseEntity<>(inventario, HttpStatus.OK);//retornando una entidad mediante una respuesta http la cual contiene dicha entidad y una respuesta definida mediante un codigo http, en este caso '200'
     }
 
+    @PreAuthorize("hasRole('DEVELOPER') || hasRole('ADMIN')" )
     @PostMapping("/create-Inventario")//Generando sub mapeo para Agregar una entidad en la database
     public ResponseEntity<?> createInventario(@RequestBody Inventario inventario){//en este caso el ResponseEntity debera de retornar un opcinal ya sea respuesta http con o sin entidad
         if(inventario.getCodigo()==null || inventario.getCodigo().isEmpty()){//verificando si existe un campo codigo o si este es null
@@ -83,6 +86,7 @@ public class InventarioController {
         return new ResponseEntity<>(new Msg("Guardado con exito"),HttpStatus.OK);//respuesta http 200
     }
 
+    @PreAuthorize("hasRole('DEVELOPER') || hasRole('ADMIN')" )
     @PutMapping("/update-Inventario/{id}")//este metodo es parecido al anterior
     public ResponseEntity<?> updateInventario(@PathVariable("id") Integer id, @RequestBody Inventario inventario){
         if (!inventarioService.existById(id)){
@@ -122,6 +126,7 @@ public class InventarioController {
         return new ResponseEntity<>(new Msg("Actualizado con exito"),HttpStatus.OK);//respuesta http 200
     }
 
+    @PreAuthorize("hasRole('DEVELOPER') || hasRole('ADMIN')" )
     @DeleteMapping("/delete-Inventario/{id}")//Generando sub mapeo para eliminar una entidad en la database mediante id
     public ResponseEntity<?> deleteInventario(@PathVariable("id") Integer id){
         if (!inventarioService.existById(id)){//se consulta si la entidad aun existe en el momento de la eliminacion evitando con ello problemas al tener ultiples usuarios trabajando la misma database
