@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 public class Rol {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,13 +16,16 @@ public class Rol {
     @Enumerated(EnumType.STRING)
     private RolNombre rolNombre;
 
+    //constructor no parametrizado
     public Rol() {
     }
 
+    //constructor parametrizado
     public Rol(@NotNull RolNombre rolNombre) {
         this.rolNombre = rolNombre;
     }
 
+    //conjunto de setters y getters
     public int getId() {
         return id;
     }

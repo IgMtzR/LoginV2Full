@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -20,15 +21,25 @@ public class Usuario {
     private String email;
     @NotNull
     private String password;
+
+    //creacion de tabla pivot para la base de datos
     @NotNull
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)//estableciendo relacion de muchos a muchos
+    /*
+    estableciendo nombre de tabla 'usuario_rol'
+    se establece la columna referenciada a usuario 'joinColumns = @JoinColumn(name = "usuario_id")'
+    se establece la columna referenciada a rol 'inverseJoinColumns = @JoinColumn(name = "rol_id")'
+     */
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
     inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    //se genera una coleccion de parametros que no pueden repetirse, dicha coleccion contendra los roles
     private Set<Rol> roles = new HashSet<>();
 
+    //constructor no parametrizado
     public Usuario() {
     }
 
+    //constructor parametrizado
     public Usuario(@NotNull String nombre, @NotNull String nombreUsuario, @NotNull String email, @NotNull String password) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;

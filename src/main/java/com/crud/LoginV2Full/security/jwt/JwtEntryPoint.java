@@ -11,14 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+@Component//AuthenticationEntryPoint establece los servicios de autenticacion
 public class JwtEntryPoint implements AuthenticationEntryPoint {
 
+    //punto de entrada para el usuario para ello se hace referencia sobre la misma clase
     private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException, ServletException {
-        logger.error("fail en el método commence");
+        logger.error("Fallo en el método commence");
         res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "no autorizado");
     }
 }

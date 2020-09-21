@@ -3,13 +3,20 @@ package com.crud.LoginV2Full.security.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+/*esta clase establece la estructura de los valores resividos para generar un nuevo usuario
+* tambien crea una coleccion de elementos que no puede contener elementos duplicados con
+* el fin de parametrizar los Roles requeridos sin errores de repeticion
+* */
 public class NuevoUsuario {
+
     private String nombre;
     private String nombreUsuario;
     private String email;
     private String password;
+    //colleccion de parametros no duplicados
     private Set<String> roles = new HashSet<>();
 
+    //conjunto de setters y getters
     public String getNombre() {
         return nombre;
     }

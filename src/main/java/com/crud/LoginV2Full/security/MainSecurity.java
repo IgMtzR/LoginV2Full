@@ -18,23 +18,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration//definiendo que la clase es una configuracion principal
+@EnableWebSecurity //proporciona la configuración a través de HttpSecurity proporcionando la configuración que se encuentra en el HTTP
+@EnableGlobalMethodSecurity(prePostEnabled = true)// activa los metodos de seguridad de forma global
 public class MainSecurity extends WebSecurityConfigurerAdapter {
 
+    //inyeccion de dependencias
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     JwtEntryPoint jwtEntryPoint;
 
-    @Bean
+    @Bean//componente reutilizable en distintos componentes
     public JwtTokenFilter jwtTokenFilter(){
         return new JwtTokenFilter();
     }
 
-    @Bean
+    @Bean//componente reutilizable en distintos componentes
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
@@ -57,6 +58,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //estableciendo politicas de Cors para las cabeceras de los html
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()

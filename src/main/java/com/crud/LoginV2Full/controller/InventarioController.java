@@ -30,7 +30,6 @@ public class InventarioController {
     //**************************************************************************************//
 
 
-
     @GetMapping("/getAllInventario")//Generando sub mapeo para consultar todas las entidades en la database
     public ResponseEntity<List<Inventario>> getAll(){//en este caso el ResponseEntity debera de retornar una lista de entidades
         List<Inventario> inventarios = inventarioService.getAllInventario();//definiendo la lista de entidades y mediante el metodo getAllInventario de la dependencia inyectada
